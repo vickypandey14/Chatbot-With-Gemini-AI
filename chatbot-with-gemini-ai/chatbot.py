@@ -22,7 +22,6 @@ class ChatBot:
             self._conversation_history = conversation_history
         else:
             self._conversation_history = [
-                self._construct_message('Hello, how can I assist you today?')
-
-
+                self._construct_message('From now on, return the output as a JSON object that can be loaded in python with the key as \'text\'. For example, {"text": "<output goes here>"}'),
+                self._construct_message('Sure, I can return the output as a regular JSON object with the key as `text`. Here is an example: {"text": "Your output"}.')
             ]
