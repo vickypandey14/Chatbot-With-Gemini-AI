@@ -29,9 +29,17 @@ class ChatBot:
                 generation_config=self._generation_config(temperature),
             )
             response.resolve()
-            return f'{response.text }\n' + '___' * 20
+            return f'{response.text}\n' + '___' * 20
         except Exception as e:
             raise GenAIException(e.message)
+
+    @property
+
+    def history(self):
+        conversation_history = [
+            {'role': message.role, 'text': message.parts[0].text} for message in self.conversation.history
+        ]
+        return conversation_history
 
     def clear_conversations(self):
         self.conversation = self.model.start_chat(history=[])
