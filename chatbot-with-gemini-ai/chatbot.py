@@ -16,15 +16,32 @@ class ChatBot:
 
         self.preload_conversation()
 
+    def send_prompt(self, prompt, temperature=0.1):
+        if temperature < 0 or temperature > 1:
+            raise GenAIException('temperature must be between 0 and 1')
+        
+        if not prompt:
+            raise GenAIException('prompt cannot be empty, please enter a prompt')
+
+        try:
+            response = self.conversation.send_message(
+                content=prompt,
+                generation_config=self._generation_config(temperature),
+            )
+            response.resolve()
+            return f'{response.text }\n' + '___' * 20
+        except Exception as e:
+            raise GenAIException(e.message)
+
     def clear_conversations(self):
         self.conversation = self.model.start_chat(history=[])
 
     def start_conversation(self):
         self.conversation = self.model.start_chat(history=self._conversation_history)
 
-    def _generation_config(self, temprature):
+    def _generation_config(self, temperature):
         return genai.types.GenerationConfig(
-            temprature=temprature
+            temperature=temperature
         )
 
     def _construct_message(self, text, role='user'):
