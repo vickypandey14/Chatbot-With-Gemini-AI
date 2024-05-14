@@ -5,7 +5,7 @@ class GenAIException(Exception):
 
 class ChatBot:
     """ chat can only have one candidate count """
-    CHATBOT_NAME = 'Byte Reptor'
+    CHATBOT_NAME = 'ByteAI'
 
     def __init__(self, api_key):
         self.genai = genai
@@ -18,10 +18,10 @@ class ChatBot:
 
     def send_prompt(self, prompt, temperature=0.1):
         if temperature < 0 or temperature > 1:
-            raise GenAIException('temperature must be between 0 and 1')
+            raise GenAIException('Temperature must be between 0 and 1')
         
         if not prompt:
-            raise GenAIException('prompt cannot be empty, please enter a prompt')
+            raise GenAIException('Prompt cannot be empty, Please enter a prompt')
 
         try:
             response = self.conversation.send_message(
